@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Viewer</title>
+    <link rel="icon" type="image" href="favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Fallback styles in case external CSS fails to load */
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .input-section {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+        }
+        input, button {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        /* Base styles */
+body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=1986&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+@supports not (background-attachment: fixed) {
+    body {
+        background: #000;
+    }
+}
+
+.hidden {
+    display: none !important;
+}
+
+.top-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8));
+    z-index: 1000;
+}
+
+.main-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.input-section {
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.input-section h1 {
+    color: white;
+    font-size: 1.5rem;
+    margin: 0 0 20px 0;
+    text-align: center;
+    font-weight: bold;
+}
+
+.input-section label {
+    display: block;
+    color: white;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.input-section input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    height: 40px;
+    font-size: 16px;
+}
+
+.input-section input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.input-section button {
+    width: 100%;
+    padding: 10px;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.input-section button:hover {
+    background: #2563eb;
+}
+
+.top-text {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7),
+                 0 0 20px rgba(255, 255, 255, 0.7),
+                 0 0 30px rgba(255, 255, 255, 0.7);
+    animation: glow 2s ease-in-out infinite alternate;
+    letter-spacing: 2px;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-transform: uppercase;
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.2;
+    padding: 0 10px;
+}
+
+.photo-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.student-photo {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    background: rgba(0, 0, 0, 0.2);
+    display: block;
+}
+
+.student-photo:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+}
+
+/* Mobile-first responsive design */
+@media screen and (max-width: 480px) {
+    .top-banner {
+        padding: 0.5rem;
+    }
+
+    .top-text {
+        font-size: 20px;
+    }
+
+    .main-container {
+        padding: 10px;
+    }
+
+    .input-section {
+        padding: 15px;
+    }
+
+    .input-section h1 {
+        font-size: 1.2rem;
+    }
+}
+
+/* Animation */
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.7),
+                     0 0 20px rgba(255, 255, 255, 0.7),
+                     0 0 30px rgba(255, 255, 255, 0.7);
+    }
+    to {
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.9),
+                     0 0 30px rgba(255, 255, 255, 0.9),
+                     0 0 40px rgba(255, 255, 255, 0.9);
+    }
+} 
+    </style>
+</head>
+<body class="min-h-screen bg-black">
+    <div class="top-banner">
+        <h1 class="top-text text-4xl font-bold text-center">SABKI NIKLEGI BAS DALKE TO DEKHO</h1>
+    </div>
+    
+    <main class="container mx-auto px-4 py-6 mt-20">
+        <div class="main-container">
+            <div class="input-section">
+                <h1 class="text-center font-bold text-white">Photo Viewer</h1>
+                
+                <div class="mb-4">
+                    <label for="rollNo" class="block text-sm font-medium mb-2 text-white">Roll Number:</label>
+                    <input type="text" id="rollNo" 
+                        class="w-full px-4 py-2 rounded"
+                        placeholder="e.g., 22CSE123">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="showPhoto()" 
+                        class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors">
+                        Show Photo
+                    </button>
+                    <button type="button" onclick="alert('Mai bhi Apka Tarah Mayush Hu!')">Get Details!</button>
+                </div>
+            </div>
+            
+            <div id="photoContainer" class="photo-container hidden">
+                <img id="studentPhoto" class="student-photo" src="" alt="Student Photo" onclick="openFullscreen(this)">
+                <p id="errorMessage" class="text-white text-center mt-2 hidden font-semibold">Photo not found for this roll number.</p>
+            </div>
+        </div>
+    </main>
+    <script>
+        // Sample student photo data (you can replace this with your actual data)
+const studentPhotos = {
+    '101': 'https://example.com/photos/student1.jpg',
+    '102': 'https://example.com/photos/student2.jpg',
+    '103': 'https://example.com/photos/student3.jpg'
+};
+
+let isAutoPlaying = false;
+let autoPlayInterval;
+
+function showPhoto() {
+    const rollNo = document.getElementById('rollNo').value.trim();
+    const photoContainer = document.getElementById('photoContainer');
+    const studentPhoto = document.getElementById('studentPhoto');
+    const errorMessage = document.getElementById('errorMessage');
+
+    // Hide all elements initially
+    photoContainer.classList.remove('hidden');
+    errorMessage.classList.add('hidden');
+    
+    if (rollNo) {
+        const photoUrl = `https://gietuerp.in/StudentDocuments/${rollNo}/${rollNo}.JPG`;
+        studentPhoto.src = photoUrl;
+        studentPhoto.classList.remove('hidden');
+        
+        // Handle image load error
+        studentPhoto.onerror = function() {
+            errorMessage.classList.remove('hidden');
+            studentPhoto.classList.add('hidden');
+        };
+        
+        // Handle image load success
+        studentPhoto.onload = function() {
+            errorMessage.classList.add('hidden');
+            studentPhoto.classList.remove('hidden');
+        };
+    } else {
+        errorMessage.classList.remove('hidden');
+        studentPhoto.classList.add('hidden');
+    }
+}
+
+function getNextRollNumber(currentRoll) {
+    // Extract the numeric part
+    const baseRoll = currentRoll.slice(0, -3); // Get everything except last 3 digits
+    const currentNum = parseInt(currentRoll.slice(-3)); // Get last 3 digits
+    const nextNum = currentNum + 1;
+    // Format the next number with leading zeros
+    return `${baseRoll}${String(nextNum).padStart(3, '0')}`;
+}
+
+// Function to open image in fullscreen
+function openFullscreen(element) {
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.webkitRequestFullscreen) { /* Safari */
+        element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) { /* IE11 */
+        element.msRequestFullscreen();
+    }
+}
+
+// Add event listener for Enter key on input field
+document.getElementById('rollNo').addEventListener('keyup', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        document.querySelector('button').click();
+    }
+});
+
+// Add event listener for button click
+document.querySelector('button').addEventListener('click', showPhoto);
+
+// Add keyboard shortcut for closing fullscreen (Escape key is default)
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape' && document.fullscreenElement) {
+        document.exitFullscreen();
+    }
+}); 
+    </script>
+</body>
+</html> 
