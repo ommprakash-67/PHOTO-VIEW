@@ -7,6 +7,7 @@
     <link rel="icon" type="image" href="favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
+    <!-- Disable inspect element functionality is now implemented directly in this file -->
     <style>
         /* Fallback styles in case external CSS fails to load */
         body {
@@ -315,4 +316,64 @@ document.addEventListener('keydown', function(event) {
 }); 
     </script>
 </body>
-</html> 
+</html>
+
+<script>
+    /**
+     * Disable Inspect Element Script
+     * This script prevents users from using browser developer tools
+     * to inspect the page elements and source code.
+     */
+
+    // Disable right-click context menu
+    document.addEventListener('contextmenu', function(event) {
+        event.preventDefault();
+        return false;
+    });
+
+    // Disable keyboard shortcuts for developer tools
+    document.addEventListener('keydown', function(event) {
+        // Prevent F12 key
+        if (event.keyCode === 123) {
+            event.preventDefault();
+            return false;
+        }
+        
+        // Prevent Ctrl+Shift+I (Chrome, Firefox, Safari)
+        if (event.ctrlKey && event.shiftKey && event.keyCode === 73) {
+            event.preventDefault();
+            return false;
+        }
+        
+        // Prevent Ctrl+Shift+J (Chrome)
+        if (event.ctrlKey && event.shiftKey && event.keyCode === 74) {
+            event.preventDefault();
+            return false;
+        }
+        
+        // Prevent Ctrl+U (View source)
+        if (event.ctrlKey && event.keyCode === 85) {
+            event.preventDefault();
+            return false;
+        }
+    });
+
+    // Detect DevTools opening
+    setInterval(function() {
+        const devtools = /./;
+        devtools.toString = function() {
+            this.opened = true;
+        };
+        
+        console.log('%c', devtools);
+        console.clear();
+        
+        if (devtools.opened) {
+            // Optional: You can redirect or show a message when DevTools is detected
+            // window.location.href = 'about:blank';
+            console.log('%cDeveloper tools detected. This action has been logged.', 'color: red; font-size: 20px;');
+        }
+    }, 1000);
+</script>
+</body>
+</html>
